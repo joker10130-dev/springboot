@@ -8,21 +8,15 @@ import java.util.List;
 @RestController
 public class UserController {
 
+//    list users show id by item and page, example if set item to 10 it will show 1-10 item
+//    It just test if the query works or not, no applied real logic yet.
     @GetMapping("/users")
-    @ResponseBody
     public List<UsersResponse> getAllUser(@RequestParam(required = false, defaultValue ="2") int page, @RequestParam(required = false, defaultValue = "15") int item){
         List<UsersResponse> users = new ArrayList<>();
-        users.add(new UsersResponse(1, "User 1"));
-        users.add(new UsersResponse(2, "User 2"));
-        users.add(new UsersResponse(3, "User 3"));
+        for(int i=1;i<=item;i++){
+            users.add(new UsersResponse(i, "User "+i+", page: "+page));
+        }
         return users;
-    }
-
-//    http://localhost:8080/test?page=5&item=20
-    @GetMapping("/test")
-    @ResponseBody
-    public String getTest(@RequestParam(required = false, defaultValue ="2") int page, @RequestParam(required = false, defaultValue = "15") int item){
-        return "page "+page+", and "+ item+" item per page";
     }
 
     @GetMapping("/users/{id}")
