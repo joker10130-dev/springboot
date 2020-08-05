@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -28,24 +29,21 @@ public class UserController {
     @GetMapping("/users")
     public PagingResponse getAllUser(@RequestParam(defaultValue ="1") int page, @RequestParam(name="item_per_page",defaultValue = "10") int itemPerPage){
         PagingResponse pr = new PagingResponse(page, itemPerPage);
+        List<UsersResponse> usersResponseList = new ArrayList<>();
 
-        List<UsersResponse> users = new ArrayList<>();
-        users.add(new UsersResponse(1, "User 1"));
-        users.add(new UsersResponse(2, "User 2"));
-        users.add(new UsersResponse(3, "User 3"));
+        Iterable<User> users = userRepository.findAll();
+        for(User user: users){
+            usersResponseList.add(new UsersResponse(user.getId(),user.getName()));
+        }
 
-        pr.setUsers(users);
+        pr.setUsers(usersResponseList);
         return pr;
     }
 
     @GetMapping("/users/{id}")
     public UsersResponse getUserById(@PathVariable int id){
-        return new UsersResponse(id, "User "+id);
+        Optional<User> user = userRepository.findById(id);
+        return new UsersResponse(user.get().getId(), user.get().getName());
     }
 
-
-//    @PostMapping(path="/users1")
-//    public String createNewUserWithFormData(NewUserRequest request){
-//        return request.getName()+request.getAge();
-//    }
 }
