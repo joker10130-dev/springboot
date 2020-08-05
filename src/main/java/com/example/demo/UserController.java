@@ -24,8 +24,6 @@ public class UserController {
         return new UsersResponse(user.getId(),user.getName()+user.getAge());
     }
 
-//    list users show id by item and page, example if set item to 10 it will show 1-10 item
-//    It just test if the query works or not, no applied real logic yet.
     @GetMapping("/users")
     public PagingResponse getAllUser(@RequestParam(defaultValue ="1") int page, @RequestParam(name="item_per_page",defaultValue = "10") int itemPerPage){
         PagingResponse pr = new PagingResponse(page, itemPerPage);
