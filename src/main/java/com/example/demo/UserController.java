@@ -18,6 +18,7 @@ public class UserController {
         return users;
     }
 
+//    http://localhost:8080/test?page=5&item=20
     @GetMapping("/test")
     @ResponseBody
     public String getTest(@RequestParam(required = false, defaultValue ="2") int page, @RequestParam(required = false, defaultValue = "15") int item){
