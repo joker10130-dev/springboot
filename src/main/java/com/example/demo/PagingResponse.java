@@ -10,6 +10,7 @@ public class PagingResponse {
     @JsonProperty("users")
     private List<UsersResponse> users;
 
+    @JsonProperty("page_no")
     private int page;
 
     @JsonProperty("item_per_page")
